@@ -5,34 +5,34 @@ using UnityEngine;
 public class MeteoritoMove : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] Vector3 aceleration, velocity, dirPlaneta,dirDesplazamiento,dirDesplazamientoDesviado;
+    [SerializeField] Vector3 aceleration, velocity, dirPlaneta,dirDesplazamiento;
     [SerializeField] float masa, magnitudFuerzaPlaneta, magnitudFuerzaDesplazamiento,maximaVelocidad;
-    [Range(0,360)]
-    [SerializeField] float tetha,radio;
-    float radian,radianSumado;
-    [SerializeField] Transform jugador;
+
+    [SerializeField] int num;
+    
     [SerializeField] bool enOrbita,mover;
+
+    [SerializeField] vectoresJugador jugador;
+    [SerializeField] Vector3 tamaño;
+    float valorTamaño;
+    
     void Start()
     {
         enOrbita = false;
 
-        tetha = 180;
-        //dirDesplazamiento = planeta.position-transform.position;
-        //Debug.Log(AnguloDelVector(dirDesplazamiento));
-        dirDesplazamiento = jugador.position - transform.position;
-        radian = tetha * Mathf.PI / 180;
-        radianSumado = radian + AnguloDelVector(dirDesplazamiento);
-        dirDesplazamientoDesviado = PolarToCartesian(1, radianSumado)+jugador.position-transform.position;
-        
+        PosicionRandom();
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+        
         Move();
 
 
-        //Debug.DrawLine(transform.position, dirDesplazamientoDesviado, Color.red);
+        Debug.DrawLine(transform.position, dirDesplazamiento, Color.red);
         Debug.DrawLine(transform.position, dirPlaneta, Color.green);
         Debug.DrawLine(transform.position, velocity + transform.position, Color.blue);
     }
@@ -47,11 +47,11 @@ public class MeteoritoMove : MonoBehaviour
             if (enOrbita == true)
             {
                 ApplyForce(dirPlaneta, magnitudFuerzaPlaneta);
-                ApplyForce(dirDesplazamientoDesviado, magnitudFuerzaDesplazamiento);
+                ApplyForce(dirDesplazamiento, magnitudFuerzaDesplazamiento);
             }
             else
             {
-                ApplyForce(dirDesplazamientoDesviado, magnitudFuerzaDesplazamiento);
+                ApplyForce(dirDesplazamiento, magnitudFuerzaDesplazamiento);
             }
             
             LimitarVelocidad();
@@ -75,17 +75,44 @@ public class MeteoritoMove : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.tag == "Planeta" )
+        {
+            PosicionRandom();
+            //Debug.Log("choco con planeta");
+            enOrbita = false;
+            aceleration = Vector3.zero;
+            velocity = Vector3.zero;
+            
+        }
         if (collision.tag == "Orbita")
         {
             enOrbita = true;
+            
         }
+        
     }
-    Vector3 PolarToCartesian(float radio, float tetha)
+    void velocidadMaximaRandom()
     {
-        return new Vector3(radio * Mathf.Cos(tetha), radio * Mathf.Sin(tetha));
+        maximaVelocidad = Random.RandomRange(2, 5);
+        masa = Random.RandomRange(0.1f, 0.2f);
+        valorTamaño = Random.RandomRange(0.3f, 0.5f);
+        tamaño.x = valorTamaño;
+        tamaño.y = valorTamaño;
+        transform.localScale = tamaño;
     }
-    float AnguloDelVector(Vector3 objetoAjeno)
+    void PosicionRandom()
     {
-        return Mathf.Atan2(objetoAjeno.x, objetoAjeno.y);
+        velocidadMaximaRandom();
+        num = Random.Range(1, 10);
+        if (num < 6)
+        {
+            transform.position = jugador.spawnMeteoritoIz;
+        }
+        else
+        {
+            transform.position = jugador.spawnMeteoritoD;
+        }
+        dirDesplazamiento = jugador.direccionJug - transform.position;
+        
     }
 }

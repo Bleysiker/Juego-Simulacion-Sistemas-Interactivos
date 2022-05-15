@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Orbita
+  - Planeta
+  - Meteorito
   layers:
   - Default
   - TransparentFX
