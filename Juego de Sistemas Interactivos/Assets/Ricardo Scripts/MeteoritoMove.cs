@@ -14,12 +14,14 @@ public class MeteoritoMove : MonoBehaviour
 
     [SerializeField] vectoresJugador jugador;
     [SerializeField] Vector3 tamaño;
+    [SerializeField] GameObject fuego;
     float valorTamaño;
+    GameObject explosion;
     
     void Start()
     {
         enOrbita = false;
-
+        
         PosicionRandom();
 
     }
@@ -77,6 +79,8 @@ public class MeteoritoMove : MonoBehaviour
     {
         if (collision.tag == "Planeta" )
         {
+            Explotar();
+            fuego.SetActive(false);
             PosicionRandom();
             //Debug.Log("choco con planeta");
             enOrbita = false;
@@ -87,7 +91,7 @@ public class MeteoritoMove : MonoBehaviour
         if (collision.tag == "Orbita")
         {
             enOrbita = true;
-            
+            fuego.SetActive(true);
         }
         
     }
@@ -95,7 +99,7 @@ public class MeteoritoMove : MonoBehaviour
     {
         maximaVelocidad = Random.RandomRange(2, 5);
         masa = Random.RandomRange(0.1f, 0.2f);
-        valorTamaño = Random.RandomRange(0.3f, 0.5f);
+        valorTamaño = Random.RandomRange(0.05f, 0.1f);
         tamaño.x = valorTamaño;
         tamaño.y = valorTamaño;
         transform.localScale = tamaño;
@@ -114,5 +118,16 @@ public class MeteoritoMove : MonoBehaviour
         }
         dirDesplazamiento = jugador.direccionJug - transform.position;
         
+    }
+    void Explotar()
+    {
+        explosion= PoolExplosiones.SharedInstance.GetPooledObject();
+        if (explosion != null)
+        {
+            explosion.transform.position = transform.position;
+            explosion.transform.rotation = transform.rotation;
+            explosion.SetActive(true);
+            explosion.GetComponent<ParticleSystem>().Play();
+        }
     }
 }
