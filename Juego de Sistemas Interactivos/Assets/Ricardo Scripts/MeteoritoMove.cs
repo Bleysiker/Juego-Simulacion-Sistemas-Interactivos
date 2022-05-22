@@ -18,12 +18,12 @@ public class MeteoritoMove : MonoBehaviour
     float valorTamaño;
     GameObject explosion;
     
-    void Start()
+    //[SerializeField] AudioClip[] audios; // 0. fuego, 1. choque 
+    void Awake()
     {
         enOrbita = false;
-        
         PosicionRandom();
-
+       
     }
 
     // Update is called once per frame
@@ -31,6 +31,8 @@ public class MeteoritoMove : MonoBehaviour
     {
         
         
+
+
         Move();
 
 
@@ -79,6 +81,8 @@ public class MeteoritoMove : MonoBehaviour
     {
         if (collision.tag == "Planeta" )
         {
+            
+           
             Explotar();
             fuego.SetActive(false);
             PosicionRandom();
@@ -90,6 +94,8 @@ public class MeteoritoMove : MonoBehaviour
         }
         if (collision.tag == "Orbita")
         {
+            
+            
             enOrbita = true;
             fuego.SetActive(true);
         }
@@ -104,6 +110,18 @@ public class MeteoritoMove : MonoBehaviour
         tamaño.y = valorTamaño;
         transform.localScale = tamaño;
     }
+  /*  void CambiarSonidos(bool deVuelta)
+    {
+        meteorito.Stop();
+        if (deVuelta == true)
+        {
+            meteorito.clip = audios[0];
+        }
+        else
+        {
+            meteorito.clip = audios[1];
+        }
+    }*/
     void PosicionRandom()
     {
         velocidadMaximaRandom();
@@ -117,6 +135,7 @@ public class MeteoritoMove : MonoBehaviour
             transform.position = jugador.spawnMeteoritoD;
         }
         dirDesplazamiento = jugador.direccionJug - transform.position;
+       
         
     }
     void Explotar()
