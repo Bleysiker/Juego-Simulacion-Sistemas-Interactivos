@@ -14,14 +14,16 @@ public class MeteoritoMove : MonoBehaviour
 
     [SerializeField] vectoresJugador jugador;
     [SerializeField] Vector3 tamaño;
+    [SerializeField] GameObject fuego;
     float valorTamaño;
+    GameObject explosion;
     
-    void Start()
+    //[SerializeField] AudioClip[] audios; // 0. fuego, 1. choque 
+    void Awake()
     {
         enOrbita = false;
-
         PosicionRandom();
-
+       
     }
 
     // Update is called once per frame
@@ -29,6 +31,8 @@ public class MeteoritoMove : MonoBehaviour
     {
         
         
+
+
         Move();
 
 
@@ -77,6 +81,10 @@ public class MeteoritoMove : MonoBehaviour
     {
         if (collision.tag == "Planeta" )
         {
+            
+           
+            Explotar();
+            fuego.SetActive(false);
             PosicionRandom();
             //Debug.Log("choco con planeta");
             enOrbita = false;
@@ -86,8 +94,10 @@ public class MeteoritoMove : MonoBehaviour
         }
         if (collision.tag == "Orbita")
         {
-            enOrbita = true;
             
+            
+            enOrbita = true;
+            fuego.SetActive(true);
         }
         
     }
@@ -95,11 +105,23 @@ public class MeteoritoMove : MonoBehaviour
     {
         maximaVelocidad = Random.RandomRange(2, 5);
         masa = Random.RandomRange(0.1f, 0.2f);
-        valorTamaño = Random.RandomRange(0.3f, 0.5f);
+        valorTamaño = Random.RandomRange(0.05f, 0.1f);
         tamaño.x = valorTamaño;
         tamaño.y = valorTamaño;
         transform.localScale = tamaño;
     }
+  /*  void CambiarSonidos(bool deVuelta)
+    {
+        meteorito.Stop();
+        if (deVuelta == true)
+        {
+            meteorito.clip = audios[0];
+        }
+        else
+        {
+            meteorito.clip = audios[1];
+        }
+    }*/
     void PosicionRandom()
     {
         velocidadMaximaRandom();
@@ -113,6 +135,18 @@ public class MeteoritoMove : MonoBehaviour
             transform.position = jugador.spawnMeteoritoD;
         }
         dirDesplazamiento = jugador.direccionJug - transform.position;
+       
         
+    }
+    void Explotar()
+    {
+        explosion= PoolExplosiones.SharedInstance.GetPooledObject();
+        if (explosion != null)
+        {
+            explosion.transform.position = transform.position;
+            explosion.transform.rotation = transform.rotation;
+            explosion.SetActive(true);
+            explosion.GetComponent<ParticleSystem>().Play();
+        }
     }
 }
