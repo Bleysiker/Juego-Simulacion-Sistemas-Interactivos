@@ -5,26 +5,37 @@ using UnityEngine;
 public class CircleMovement : MonoBehaviour
 {
     public Transform rotationcenter;
+    [SerializeField] private Vector3 izq, der;
+
     public float angularspeed, rotationRadius;
     private float posX, posY, angle = 0;
+    [SerializeField] private Animator animator;
+    
+
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        animator.SetFloat("Dino", Mathf.Abs(angle));
         if (Input.GetKey(KeyCode.RightArrow))
         {
+            transform.localScale = der;
             MovimientoCircular();
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
+            transform.localScale = izq;
             MovimientoCircularNegativo();
+
+
         }
     }
 
@@ -54,6 +65,7 @@ public class CircleMovement : MonoBehaviour
             angle = 0;
         }
 
+       
 
     }
 

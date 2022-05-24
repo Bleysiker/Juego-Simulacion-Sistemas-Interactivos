@@ -86,11 +86,13 @@ public class MeteoritoMove : MonoBehaviour
             Explotar();
             fuego.SetActive(false);
             PosicionRandom();
+
             //Debug.Log("choco con planeta");
             enOrbita = false;
             aceleration = Vector3.zero;
             velocity = Vector3.zero;
-            
+            PuntajeManager.scoreValue += 10;
+
         }
         if (collision.tag == "Orbita")
         {

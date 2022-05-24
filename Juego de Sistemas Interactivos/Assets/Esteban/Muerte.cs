@@ -13,9 +13,9 @@ public class Muerte : MonoBehaviour
 
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Meteorito"))
+        if (other.CompareTag("Player"))
         {
             MenuMuerte.SetActive(true);
             Time.timeScale = 0f;
@@ -32,10 +32,11 @@ public class Muerte : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene("Esteban");
+        SceneManager.LoadScene("Main");
         MenuMuerte.SetActive(false);
         Time.timeScale = 1f;
         //Debug.Log("Jugando");
+        PuntajeManager.scoreValue = 0;
 
     }
 }

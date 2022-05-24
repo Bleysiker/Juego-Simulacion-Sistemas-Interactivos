@@ -7,6 +7,7 @@ TagManager:
   - Orbita
   - Planeta
   - Meteorito
+  - Meteoro
   layers:
   - Default
   - TransparentFX
