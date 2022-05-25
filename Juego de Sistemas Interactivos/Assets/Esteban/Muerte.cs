@@ -38,6 +38,20 @@ public class Muerte : MonoBehaviour
         SceneManager.LoadScene("Main");
         
     }
+
+    public void menu()
+    {
+        StartCoroutine("Gomenu");
+    }
+    IEnumerator Gomenu()
+    {
+        boton.Play();
+        Time.timeScale = 1f;
+        yield return new WaitForSeconds(0.1f);
+        PuntajeManager.scoreValue = 0;
+        SceneManager.LoadScene("MeEnu");
+
+    }
     IEnumerator Morir()
     {
         grito.Play();
