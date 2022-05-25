@@ -6,37 +6,44 @@ using UnityEngine.SceneManagement;
 public class Muerte : MonoBehaviour
 {
     [SerializeField] GameObject MenuMuerte;
-
-    public void Update()
-    {
-        
-
-    }
+    [SerializeField] AudioSource grito,boton;
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Meteorito"))
         {
-            MenuMuerte.SetActive(true);
-            Time.timeScale = 0f;
+            Time.timeScale = 0.1f;
+            StartCoroutine("Morir");
         }
     }
 
-    public void Muerto()
+    /*public void Muerto()
     {
         MenuMuerte.SetActive(true);
         Time.timeScale = 0f;
         // Debug.Log("pausado");
 
-    }
+    }*/
 
     public void Restart()
     {
-        SceneManager.LoadScene("Main");
-        MenuMuerte.SetActive(false);
+        StartCoroutine("Reiniciar");
+    }
+    IEnumerator Reiniciar()
+    {
+        boton.Play();
         Time.timeScale = 1f;
-        //Debug.Log("Jugando");
+        yield return new WaitForSeconds(0.1f);
         PuntajeManager.scoreValue = 0;
-
+        SceneManager.LoadScene("Main");
+        
+    }
+    IEnumerator Morir()
+    {
+        grito.Play();
+        MenuMuerte.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        Time.timeScale = 0f;
+        
     }
 }

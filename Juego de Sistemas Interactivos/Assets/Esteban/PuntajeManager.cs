@@ -7,19 +7,34 @@ using TMPro;
 public class PuntajeManager : MonoBehaviour
 {
     public static int scoreValue = 0;
-    Text score;
-     TMP_Text scoreMejorado;
+    [SerializeField] TextMeshProUGUI score;
+    [SerializeField] int[] valores;
+    [SerializeField] int cont;
+    [SerializeField] Eventos ganarPuntos,masMeteoritos;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        score = GetComponent<Text>();
-        scoreMejorado = GetComponent<TMP_Text>();
+        cont = 0;
+        score.text = "Score: " + scoreValue;
+        ganarPuntos.GEvent += SumarPuntos;
     }
-
-    // Update is called once per frame
-    void Update()
+    void SumarPuntos()
     {
-       
-        score.text = "Score" + scoreValue;
+        scoreValue += 10;
+        score.text = "Score: " + scoreValue;
+        if (cont < valores.Length)
+        {
+            if (scoreValue >= valores[cont])
+            {
+                masMeteoritos.FireEvent();
+                cont++;
+            }
+        }
+        
+    }
+    private void OnDestroy()
+    {
+        ganarPuntos.GEvent -= SumarPuntos;
     }
 }
+
