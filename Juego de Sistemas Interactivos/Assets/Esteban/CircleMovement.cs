@@ -26,15 +26,15 @@ public class CircleMovement : MonoBehaviour
         animator.SetFloat("Dino", Mathf.Abs(angle));
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.localScale = der;
-            MovimientoCircular();
+            transform.localScale = izq;
+            MovimientoCircularNegativo();
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.localScale = izq;
-            MovimientoCircularNegativo();
-
+            transform.localScale = der;
+            
+            MovimientoCircular();
 
         }
     }

@@ -17,13 +17,23 @@ public class MeteoritoMove : MonoBehaviour
     [SerializeField] GameObject fuego;
     float valorTamaño;
     GameObject explosion;
-    
+    [SerializeField]int cont;
+    [SerializeField] Eventos ganarPuntos;
+    [SerializeField] bool perseguidor;
     //[SerializeField] AudioClip[] audios; // 0. fuego, 1. choque 
     void Awake()
     {
         enOrbita = false;
         PosicionRandom();
-       
+        if (perseguidor == true)
+        {
+            cont = 0;
+        }
+        else
+        {
+            cont = 1;
+        }
+        
     }
 
     // Update is called once per frame
@@ -79,28 +89,33 @@ public class MeteoritoMove : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.tag == "Orbita")
+        {
+
+
+            enOrbita = true;
+            fuego.SetActive(true);
+        }
         if (collision.tag == "Planeta" )
         {
+
             
-           
             Explotar();
             fuego.SetActive(false);
             PosicionRandom();
-
+            cont++;
             //Debug.Log("choco con planeta");
             enOrbita = false;
             aceleration = Vector3.zero;
             velocity = Vector3.zero;
-            PuntajeManager.scoreValue += 10;
+            if (cont > 1)
+            {
+                ganarPuntos.FireEvent();
+            }
+           
 
         }
-        if (collision.tag == "Orbita")
-        {
-            
-            
-            enOrbita = true;
-            fuego.SetActive(true);
-        }
+        
         
     }
     void velocidadMaximaRandom()
