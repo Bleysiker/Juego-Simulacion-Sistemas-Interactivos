@@ -647,7 +647,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1165234596
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1045,7 +1045,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1f1caa05f3296374197b06576083a921, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.574
+  m_Volume: 0.872
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1457,6 +1457,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1938568794}
   - component: {fileID: 1938568795}
+  - component: {fileID: 1938568796}
   m_Layer: 0
   m_Name: ManagerApariciones
   m_TagString: Untagged
@@ -1496,3 +1497,15 @@ MonoBehaviour:
   - {fileID: 1690974213}
   soundtrack: {fileID: 1700571790}
   rugido: {fileID: 886145895}
+--- !u!114 &1938568796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938568793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39e12b3514a20a04bada7d248cd705b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
