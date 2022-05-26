@@ -19,5 +19,6 @@ public class ManagerApariciones : MonoBehaviour
         yield return new WaitForSeconds(4.3f);
         soundtrack.Play();
         objetosMenu[2].SetActive(true);
+        objetosMenu[3].SetActive(true);
     }
 }
